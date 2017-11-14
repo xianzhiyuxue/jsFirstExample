@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			
+* {
+	margin:0;
+	padding:0;
+}
+.title {
+	width:400px;
+	height:70px;
+	margin:0 auto;
+	padding-top:30px;
+	text-align:center;
+	font-size:24px;
+	font-weight:bold;
+	color:#F00;
+}
+.btns {
+	width:190px;
+	height:30px;
+	margin:0 auto;
+}
+.btns span {
+	display:block;
+	float:left;
+	width:80px;
+	height:27px;
+	line-height:27px;
+	background:#036;
+	border:1px solid #eee;
+	border-radius:7px;
+	margin-right:10px;
+	color:#FFF;
+	text-align:center;
+	font-size:14px;
+	font-family:"微软雅黑";
+	cursor:pointer;
+}
+		</style>
+	</head>
+	<body>
+		 
+<div id="title" class="title">开始抽奖啦！</div>
+<div class="btns">
+    <span id="play">开 始</span>
+    <span id="stop">停 止</span>
+</div>
+
+<script>
+	
+var data = ['iPhoneX', '外星人笔记本', 'IPad', '佳能相机', 'copy小熊', '谢谢参与', '50元话费卡', '腾讯大王卡','下次再来'],
+    timer = null,
+    flag = 0;
+
+window.onload = function() {
+    var play = document.getElementById('play'),
+        stop = document.getElementById('stop');
+
+    // 开始抽奖
+    play.onclick = playFun;//鼠标点击
+    stop.onclick = stopFun;
+
+    // 键盘事件
+    document.onkeyup = function(event) {
+        event = event || window.event;
+        if (event.keyCode == 13) {//Enter键值
+            if (flag == 0) {//Enter快速切换状态
+                playFun();
+                flag = 1;
+            } else {
+                stopFun();
+                flag = 0;
+            }
+        }
+    }
+}
+
+function playFun() {
+    var title = document.getElementById('title');
+    var play = document.getElementById('play');
+    clearInterval(timer);
+    timer = setInterval(function() {
+        var random = Math.floor(Math.random() * data.length);//获取数据数组长度内的随机数下标
+        title.innerHTML = data[random];//将随机数显示
+    }, 50);//1秒20次，控制速度
+    play.style.background = '#999';//鼠标不可选，Enter可以
+}
+
+function stopFun() {
+    clearInterval(timer);
+    var play = document.getElementById('play');
+    play.style.background = '#036';//颜色恢复
+}
+</script>
+	</body>
+</html>
